@@ -15,7 +15,7 @@ from sklearn.utils.class_weight import compute_class_weight
 def csv_report(report, name):
     lines = report.split('\n')
     data = [line.split()[1:] for line in lines[2:-5]]
-    columns = ['class', 'precision', 'recall', 'f1-score', 'support']
+    columns = ['precision', 'recall', 'f1-score', 'support']
     df = pd.DataFrame(data, columns=columns)
 
     output_csv_path = name+".csv"
