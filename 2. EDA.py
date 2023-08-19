@@ -1,4 +1,4 @@
-# This script performs some high-level exploratory data analysis (EDA).
+# This script performs some high-level exploratory data analysis (EDA) of our review dataset to inform our modelling choices.
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -20,6 +20,7 @@ with open(export_path, 'rb') as f:
 #endregion
 
 #region EDA
+# We'll create some plots for inspection.
 # Score Distribution
 sp = sns.displot(df, x="overall")
 sp.set(xlabel="Review Score", ylabel="Count", title='Review Score Distribution')
@@ -28,17 +29,19 @@ sp.set(xlabel="Review Score", ylabel="Count", title='Review Score Distribution')
 # Length Distribution
 # Function to count words in a text
 def count_words(text):
-    words = text.split()  # Split text into words
-    return len(words)      # Return the count of words
+    words = text.split()
+    return len(words)
 
 
 df["reviewLength"] = df["stemmedText"].apply(count_words)
 # Check for outliers at upper end.
 df["reviewLength"].quantile([0.5, 0.99, 0.995, 1])
+# There is a very small proportion of very long reviews.
 
 # Review Length Plot
 lp = sns.displot(df.loc[df["reviewLength"] <= 300], x="reviewLength", bins=20)
 lp.set(xlabel="Review Length (Words)", ylabel="Count", title="Review Length Distribution")
+# Most reviews are quite short.
 
 # Length-Score Correlation
 correlation = df["reviewLength"].corr(df["overall"])
@@ -54,6 +57,6 @@ for ax in vp.axes.flat:
         ax.annotate(f'{p.get_height():.1f}%',
                     (p.get_x() + p.get_width() / 2., p.get_height()),
                     ha="center", va="bottom")
-# Near-identical distributions, so we won't worry about excluding non-verified reviews either.
+# Near-identical distributions, so we won't worry about treating non-verified reviews differently/excluding them.
 
 #endregion
