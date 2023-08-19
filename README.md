@@ -1,5 +1,5 @@
 # Amazon Digital Music Reviews
-We use ~1.5 million Amazon digital music reviews to: 
+We use an Amazon digital music review dataset to: 
 1. Trial several models that aim to predict the score (1-5*) from the review text. 
 2. Explore the text to look for useful business insights. 
 
